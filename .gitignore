@@ -1,0 +1,11 @@
+*.ipynb
+main.py
+*.pyc
+*.pdf
+*.pkl
+*.npy
+*.h5
+*.json
+*.faiss
+.env
+.venv
