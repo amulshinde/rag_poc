@@ -1,176 +1,75 @@
-# Simple RAG using FAISS and Google Gemini
+# RAG PDF Question Answering App
 
-A lightweight Retrieval-Augmented Generation (RAG) application built with Python that allows users to ask questions from PDF documents.
+This repository contains a simple Retrieval-Augmented Generation (RAG) proof of concept for asking questions about a PDF document.
 
-The project extracts text from a PDF, splits it into chunks, generates embeddings using Sentence Transformers, stores them in a FAISS vector database, retrieves the most relevant chunks for a query, and uses Google Gemini to generate an accurate response.
-
----
+The app loads a PDF, extracts its text, splits it into chunks, creates embeddings with a sentence-transformer model, stores them in a FAISS index, and uses Gemini to answer questions based on the retrieved context.
 
 ## Features
 
-- Extract text from PDF files
-- Split text into manageable chunks
-- Generate embeddings using `all-MiniLM-L6-v2`
-- Store embeddings in a FAISS vector database
-- Save and load FAISS index locally
-- Retrieve relevant document chunks using semantic search
-- Generate answers using Google Gemini
-- API key stored securely using `.env`
+- Reads PDF files and extracts text
+- Splits long documents into smaller chunks
+- Builds embeddings and a FAISS vector index
+- Caches embeddings and index files for faster reuse
+- Runs an interactive question-answer loop in the terminal
 
----
+## Requirements
 
-## Tech Stack
+- Python 3.9+
+- A Google Gemini API key
 
-- Python
-- FAISS
-- Sentence Transformers
-- Google Gemini API
-- PyPDF2
-- python-dotenv
+## Setup
 
----
-
-## Project Workflow
-
-```text
-                PDF
-                 │
-                 ▼
-        Extract Text
-                 │
-                 ▼
-         Split into Chunks
-                 │
-                 ▼
-Generate Embeddings
-(all-MiniLM-L6-v2)
-                 │
-                 ▼
-      Store in FAISS Index
-                 │
-─────────────────┼─────────────────
-                 │
-            User Query
-                 │
-                 ▼
-Generate Query Embedding
-                 │
-                 ▼
- Search FAISS Index
-                 │
-                 ▼
- Retrieve Top-K Chunks
-                 │
-                 ▼
- Send Context + Query
-      to Gemini API
-                 │
-                 ▼
-      Generated Answer
-```
-
----
-
-## Installation
-
-Clone the repository
+1. Create and activate a virtual environment
 
 ```bash
-git clone https://github.com/yourusername/your-repository.git
-cd your-repository
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-Install dependencies
+2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+3. Set your Gemini API key
 
-## Environment Variables
+On Windows PowerShell:
 
-Create a `.env` file.
-
-```text
-GOOGLE_API_KEY=YOUR_API_KEY
+```powershell
+$env:GEMINI_API_KEY="your_api_key_here"
 ```
 
----
+## Usage
 
-## Run
-
-Create the FAISS index
+Run the app with a PDF file:
 
 ```bash
-python create_index.py
+python app.py --pdf "path/to/your.pdf"
 ```
 
-Ask questions
+Optional arguments:
+
+- `--pdf`: path to the PDF file
+- `--cache-dir`: directory where cached embeddings and FAISS artifacts are stored
+
+Example:
 
 ```bash
-python rag.py
+python app.py --pdf "17 NISM-Series-XV-Research Analyst Examination Workbook February 2026.pdf" --cache-dir cache
 ```
 
----
+After startup, type your question and press Enter. Type `exit` to quit.
 
-## Folder Structure
+## Project Structure
 
-```
-project/
-│
-├── data/
-│   └── sample.pdf
-│
-├── faiss_index/
-│
-├── config.py
-├── create_index.py
-├── rag.py
-├── gen_ai.py
-├── utils.py
-├── requirements.txt
-├── .env
-└── README.md
-```
+- `app.py` - main CLI entrypoint
+- `utils.py` - PDF extraction, chunking, FAISS indexing, and search
+- `gen_ai.py` - Gemini-based answer generation
+- `config.py` - model configuration
+- `cache/` - stored embeddings and index artifacts
 
----
+## Notes
 
-## Model Used
+The first run may take some time because the embedding model and FAISS index are built from scratch. Subsequent runs will reuse the cached artifacts when the PDF and its hash match.
 
-Embedding Model
-
-```
-sentence-transformers/all-MiniLM-L6-v2
-```
-
-LLM
-
-```
-Google Gemini
-```
-
-Vector Database
-
-```
-FAISS
-```
-
----
-
-## Future Improvements
-
-- Multiple PDF support
-- Metadata filtering
-- Hybrid Search (BM25 + FAISS)
-- Streamlit interface
-- Conversation memory
-- Reranking
-- Source citations
-- Docker support
-
----
-
-## License
-
-MIT License
