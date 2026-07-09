@@ -34,11 +34,12 @@ pip install -r requirements.txt
 
 3. Set your Gemini API key
 
-On Windows PowerShell:
+Create a `.env` file in the project root and add your Google Gemini API key:
 
-```powershell
-$env:GEMINI_API_KEY="your_api_key_here"
+```env
+GEMINI_API_KEY=your_api_key_here
 ```
+
 
 ## Usage
 
@@ -56,11 +57,7 @@ Optional arguments:
 Example:
 
 ```bash
-<<<<<<< HEAD
-python app.py --pdf "17 NISM-Series-XV-Research Analyst Examination Workbook February 2026.pdf" --cache-dir cache
-=======
 python app.py --pdf "sample.pdf" --cache-dir cache
->>>>>>> 636b23956400b0357cc74575bf1539bd620fa141
 ```
 
 After startup, type your question and press Enter. Type `exit` to quit.
