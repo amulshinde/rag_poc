@@ -56,7 +56,11 @@ Optional arguments:
 Example:
 
 ```bash
+<<<<<<< HEAD
 python app.py --pdf "17 NISM-Series-XV-Research Analyst Examination Workbook February 2026.pdf" --cache-dir cache
+=======
+python app.py --pdf "sample.pdf" --cache-dir cache
+>>>>>>> 636b23956400b0357cc74575bf1539bd620fa141
 ```
 
 After startup, type your question and press Enter. Type `exit` to quit.

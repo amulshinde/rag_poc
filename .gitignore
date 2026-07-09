@@ -9,3 +9,6 @@ main.py
 *.faiss
 .env
 .venv
+app_archive_260629.py
+app_archive_260630.py
+app_archive_*.py
